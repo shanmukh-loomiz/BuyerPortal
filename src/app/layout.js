@@ -5,6 +5,7 @@ import Sidebar from "./components/sidebar";
 import RFQForm from "./components/RFQ";
 import Account from "./components/account";
 
+import SignupSignin from "./components/SignupSignin";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,10 +25,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
+        {/* <Navbar />
         <Sidebar />
-        <RFQForm />
+        <RFQForm /> */}
         {/* <Account /> */}
+
+        <SignupSignin />
         <main>{children}</main>
       </body>
     </html>
