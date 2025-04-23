@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef } from "react";
-import "../styles/RFQ.css";
+
 
 const RFQForm = () => {
   // Form state management

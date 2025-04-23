@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import "../styles/SignupSignin.css";
+
 export default function AuthSwitcher() {
   const [activeForm, setActiveForm] = useState('signin');
 
