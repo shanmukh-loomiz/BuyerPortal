@@ -26,8 +26,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <Sidebar />
-        <RFQForm />
-        {/* <Account /> */}
+       
         <main>{children}</main>
       </body>
     </html>
