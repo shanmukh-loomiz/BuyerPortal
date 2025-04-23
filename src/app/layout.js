@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   // This function will run on the client after hydration
   const ClientLayout = () => {
     const pathname = usePathname();
-    const isLoginPage = pathname.startsWith('/login');
+    const isLoginPage = pathname.startsWith('/login') ;
     
     return (
       <>
