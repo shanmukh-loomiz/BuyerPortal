@@ -711,20 +711,20 @@ const inputStyle = "border border-gray-300 p-2 rounded-lg w-full focus:outline-n
             </div>
           </form>
           {showSuccessPopup && (
-  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
-    <div className="bg-white rounded-lg p-8 max-w-lg w-full shadow-xl border border-gray-200 transform animate-fadeIn">
+  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="bg-green-200 rounded-2xl p-10 max-w-lg w-full shadow-2xl border-2 border-green-300 transform animate-fadeIn">
       <div className="flex flex-col items-center text-center">
-        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-5 shadow-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mb-6 shadow-lg animate-bounce">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
-        <h2 className="text-2xl font-bold mb-3 text-gray-800 font-['NSmedium']">THANK YOU FOR COMPLETING THE FORM!</h2>
-        <p className="text-gray-600">
+        <h2 className="text-3xl font-bold mb-4 text-green-800 font-['NSmedium']">THANK YOU FOR COMPLETING THE FORM!</h2>
+        <p className="text-gray-800 text-lg">
           We are currently verifying your submission and will get back to you at the earliest opportunity.
         </p>
-        <div className="mt-6 w-full bg-gray-200 h-1 rounded-full overflow-hidden">
-          <div className="bg-green-500 h-full animate-progress"></div>
+        <div className="mt-6 w-full bg-green-300 h-1 rounded-full overflow-hidden">
+          <div className="bg-green-600 h-full animate-progress"></div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import { useState, useEffect } from "react";
 import "./globals.css";
@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
   const ClientLayout = () => {
     const pathname = usePathname();
     const isLoginPage = pathname.startsWith('/login');
+    const isBuyerFormPage = pathname.startsWith('/buyer-form');
     
     // State for responsive design - Use server-safe initial values
     const [mounted, setMounted] = useState(false);
@@ -58,21 +59,22 @@ export default function RootLayout({ children }) {
     const defaultNavClasses = "h-[65px] flex justify-between items-center px-[20px] md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md";
     
     // Use consistent classes during initial server render
-    const navClasses = mounted 
+    const navClasses = mounted
       ? "h-[65px] flex justify-between items-center px-3 sm:px-5 md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md"
       : defaultNavClasses;
     
-    // Main content classes
+    // Main content classes - different approach for buyer form page
     const mainClasses = mounted
-  ? `pt-[65px] transition-all duration-300 overflow-x-hidden
-     ${isMobile 
-       ? 'ml-0 px-4' 
-       : 'ml-[290px] px-4 sm:px-6 md:px-8 lg:px-10'}`
-  : "pt-[65px]";
+      ? isBuyerFormPage
+        ? "pt-[65px] w-full min-h-screen" // Full width for buyer form page
+        : `pt-[65px] transition-all duration-300 overflow-x-hidden
+           ${isMobile ? 'ml-0 px-4' : 'ml-[290px] px-4 sm:px-6 md:px-8 lg:px-10'}`
+      : "pt-[65px]";
+      
     return (
       <>
         {!isLoginPage && (
-          <Navbar 
+          <Navbar
             isMobile={mounted ? isMobile : false}
             isSidebarOpen={mounted ? isSidebarOpen : false}
             toggleSidebar={toggleSidebar}
@@ -80,17 +82,17 @@ export default function RootLayout({ children }) {
           />
         )}
         
-        {!isLoginPage && (
+        {!isLoginPage && !isBuyerFormPage && (
           <div className={mounted ? "" : "hidden"}>
-            <Sidebar 
-              isMobile={isMobile} 
-              isOpen={isSidebarOpen} 
+            <Sidebar
+              isMobile={isMobile}
+              isOpen={isSidebarOpen}
               closeSidebar={() => isMobile && setIsSidebarOpen(false)}
             />
           </div>
         )}
         
-        <main 
+        <main
           className={!isLoginPage ? mainClasses : ""}
           onClick={() => isMobile && isSidebarOpen && setIsSidebarOpen(false)}
         >
@@ -98,7 +100,7 @@ export default function RootLayout({ children }) {
         </main>
       </>
     );
-  }
+  };
   
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
