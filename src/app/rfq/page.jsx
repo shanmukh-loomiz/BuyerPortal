@@ -20,7 +20,7 @@ const RFQForm = () => {
   const [files, setFiles] = useState({
     techpack: null,
     productImages: [],
-    colourSwatch: [],
+    colorSwatch: [],
     fabric: [],
     miscellaneous: []
   });
@@ -215,7 +215,7 @@ useEffect(() => {
     }
     
     // Check required multi-files
-    const requiredMultiFiles = ["productImages", "colourSwatch", "fabric"];
+    const requiredMultiFiles = ["productImages", "colorSwatch", "fabric"];
     for (const fileType of requiredMultiFiles) {
       if (files[fileType].length === 0) {
         setSubmitStatus({
@@ -268,7 +268,7 @@ useEffect(() => {
       }
       
       // Append multiple files
-      ["productImages", "colourSwatch", "fabric", "miscellaneous"].forEach(fileType => {
+      ["productImages", "colorSwatch", "fabric", "miscellaneous"].forEach(fileType => {
         if (files[fileType] && files[fileType].length > 0) {
           files[fileType].forEach((fileObj, index) => {
             formDataToSend.append(`${fileType}[${index}]`, fileObj.file);
@@ -326,7 +326,7 @@ useEffect(() => {
     setFiles({
       techpack: null,
       productImages: [],
-      colourSwatch: [],
+      colorSwatch: [],
       fabric: [],
       miscellaneous: []
     });
@@ -712,28 +712,28 @@ useEffect(() => {
       <div className="flex flex-col gap-4 w-full lg:w-1/4">
             {/* Colour Swatch */}
             <div className="flex flex-col border border-gray-400 rounded-[10px] p-4 bg-white h-28">
-              {files.colourSwatch.length === 0 ? (
+              {files.colorSwatch.length === 0 ? (
                 <div
                   className="flex flex-col items-center justify-center h-full cursor-pointer"
                   onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => handleMultiFileDrop(e, "colourSwatch")}
+                  onDrop={(e) => handleMultiFileDrop(e, "colorSwatch")}
                   onClick={() => swatchRef.current.click()}
                 >
                   <img src="/SwatchLogo.svg" alt="Swatch" className="mb-1 w-6 h-6" />
-                  <p className="font-semibold text-[#000] opacity-[0.67] text-sm mb-1 font-[NSmedium]">COLOUR SWATCH*</p>
+                  <p className="font-semibold text-[#000] opacity-[0.67] text-sm mb-1 font-[NSmedium]">COLOR SWATCH*</p>
                   <p className="text-xs text-[#000] opacity-[0.67] font-[NSregular]">Drop files here or Browse</p>
                   <input
                     type="file"
                     ref={swatchRef}
                     multiple
                     className="hidden"
-                    onChange={(e) => handleMultiFileChange(e, "colourSwatch")}
+                    onChange={(e) => handleMultiFileChange(e, "colorSwatch")}
                   />
                 </div>
               ) : (
                 <div className="h-full flex flex-col">
                   <div className="flex justify-between items-center mb-1">
-                    <p className="font-semibold text-[#000] opacity-[0.67] text-sm font-[NSmedium]">COLOUR SWATCH*</p>
+                    <p className="font-semibold text-[#000] opacity-[0.67] text-sm font-[NSmedium]">COLOR SWATCH*</p>
                     
                     {/* Add more button */}
                     <button
@@ -749,7 +749,7 @@ useEffect(() => {
                   
                   <div className="flex-1 overflow-y-auto pr-1 scrollbar-thin" style={{ maxHeight: "calc(100% - 25px)" }}>
                     <div className="flex flex-col gap-1">
-                      {files.colourSwatch.map((fileObj) => (
+                      {files.colorSwatch.map((fileObj) => (
                         <div 
                           key={fileObj.id} 
                           className="flex items-center w-full border border-gray-200 rounded-md overflow-hidden group mb-1 bg-white shadow-sm hover:shadow transition-all"
@@ -779,7 +779,7 @@ useEffect(() => {
                           {/* Delete button */}
                           <button
                             type="button"
-                            onClick={() => handleDeleteFile("colourSwatch", fileObj.id)}
+                            onClick={() => handleDeleteFile("colorSwatch", fileObj.id)}
                             className="mr-1 p-1 bg-gray-50 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100"
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -796,7 +796,7 @@ useEffect(() => {
                     ref={swatchRef}
                     multiple
                     className="hidden"
-                    onChange={(e) => handleMultiFileChange(e, "colourSwatch")}
+                    onChange={(e) => handleMultiFileChange(e, "colorSwatch")}
                   />
                 </div>
               )}
