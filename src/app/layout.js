@@ -18,98 +18,119 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }) {
-  // This function will run on the client after hydration
-  const ClientLayout = () => {
-    const pathname = usePathname();
-    const isLoginPage = pathname.startsWith('/login');
-    const isBuyerFormPage = pathname.startsWith('/buyer-form');
+  const pathname = usePathname();
+  const isLoginPage = pathname?.startsWith('/login') || false;
+  const isBuyerFormPage = pathname?.startsWith('/buyer-form') || false;
+  
+  // Combined check for pages that should not have navigation
+  const hideNavigation = isLoginPage || isBuyerFormPage;
+  
+  // State for responsive design
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Use useEffect to handle client-side operations only
+  useEffect(() => {
+    setMounted(true);
     
-    // Combined check for pages that should not have navigation
-    const hideNavigation = isLoginPage || isBuyerFormPage;
-    
-    // State for responsive design - Use server-safe initial values
-    const [mounted, setMounted] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    
-    useEffect(() => {
-      setMounted(true);
+    // Check if viewport is mobile size
+    const checkIsMobile = () => {
+      const isMobileView = window.innerWidth < 768;
+      setIsMobile(isMobileView);
       
-      // Check if viewport is mobile size
-      const checkIsMobile = () => {
-        const isMobileView = window.innerWidth < 768;
-        setIsMobile(isMobileView);
-        
-        // On larger screens, sidebar is always open by default
-        // On mobile, sidebar is closed by default
-        setIsSidebarOpen(!isMobileView);
-      };
-      
-      // Initial check
-      checkIsMobile();
-      
-      // Add resize listener
-      window.addEventListener('resize', checkIsMobile);
-      
-      // Clean up
-      return () => window.removeEventListener('resize', checkIsMobile);
-    }, []);
-    
-    const toggleSidebar = () => {
-      setIsSidebarOpen(!isSidebarOpen);
+      // On larger screens, sidebar is always open by default
+      // On mobile, sidebar is closed by default
+      setIsSidebarOpen(!isMobileView);
     };
     
-    // Default styles for initial server render
-    const defaultNavClasses = "h-[65px] flex justify-between items-center px-[20px] md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md";
+    // Initial check
+    checkIsMobile();
     
-    // Use consistent classes during initial server render
-    const navClasses = mounted
-      ? "h-[65px] flex justify-between items-center px-3 sm:px-5 md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md"
-      : defaultNavClasses;
+    // Add resize listener
+    window.addEventListener('resize', checkIsMobile);
     
-    // Main content classes - adjust padding when navigation is hidden
-    const mainClasses = mounted
-      ? hideNavigation
-        ? "w-full min-h-screen" // No top padding for pages without navbar
-        : `pt-[65px] transition-all duration-300 overflow-x-hidden
-           ${isMobile ? 'ml-0 px-4' : 'ml-[290px] px-4 sm:px-6 md:px-8 lg:px-10'}`
-      : "pt-[65px]";
-      
+    // Clean up
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  
+  // If not mounted yet, render a simple layout without client-specific features
+  // This ensures server and client rendering match during hydration
+  if (!mounted) {
     return (
-      <>
+      <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body className="overflow-x-hidden">
+          {hideNavigation ? (
+            <main className="w-full min-h-screen">
+              {children}
+            </main>
+          ) : (
+            <>
+              <div className="h-[65px] flex justify-between items-center px-3 sm:px-5 md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md">
+                {/* Simplified navbar for server render */}
+                <div className="flex items-center space-x-2">
+                  <img
+                    src="/LoomizLogoDarkBlue.svg"
+                    alt="Loomiz Logo"
+                    className="h-[36px] sm:h-[32px] md:h-[38px]"
+                  />
+                </div>
+              </div>
+              <main className="pt-[65px] px-4 sm:px-6 md:px-8 lg:px-10">
+                {children}
+              </main>
+            </>
+          )}
+        </body>
+      </html>
+    );
+  }
+  
+  // Default styles for navbar
+  const navClasses = "h-[65px] flex justify-between items-center px-3 sm:px-5 md:px-[50px] bg-white border-b border-[#e0e0e0] fixed top-0 left-0 right-0 z-[1000] shadow-md";
+  
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="overflow-x-hidden">
         {!hideNavigation && (
           <Navbar
-            isMobile={mounted ? isMobile : false}
-            isSidebarOpen={mounted ? isSidebarOpen : false}
+            isMobile={isMobile}
+            isSidebarOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
-            navClasses={navClasses}
           />
         )}
         
         {!hideNavigation && (
-          <div className={mounted ? "" : "hidden"}>
-            <Sidebar
-              isMobile={isMobile}
-              isOpen={isSidebarOpen}
-              closeSidebar={() => isMobile && setIsSidebarOpen(false)}
-            />
-          </div>
+          <Sidebar
+            isMobile={isMobile}
+            isOpen={isSidebarOpen}
+            closeSidebar={() => isMobile && setIsSidebarOpen(false)}
+          />
         )}
         
-        <main
-          className={!hideNavigation ? mainClasses : "min-h-screen"}
-          onClick={() => isMobile && isSidebarOpen && setIsSidebarOpen(false)}
-        >
-          {children}
-        </main>
-      </>
-    );
-  };
-
-  return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="overflow-x-hidden">
-        <ClientLayout />
+        {/* For login/buyer form pages - render with full width and no padding */}
+        {hideNavigation ? (
+          <main className="w-full min-h-screen">
+            {children}
+          </main>
+        ) : (
+          /* For dashboard pages - render with sidebar and padding */
+          <main
+            className={`
+              pt-[65px] 
+              transition-transform duration-300
+              ${isMobile ? 'w-full' : 'ml-[290px]'} 
+              px-4 sm:px-6 md:px-8 lg:px-10
+            `}
+            onClick={() => isMobile && isSidebarOpen && setIsSidebarOpen(false)}
+          >
+            {children}
+          </main>
+        )}
       </body>
     </html>
   );

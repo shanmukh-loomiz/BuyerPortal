@@ -26,7 +26,7 @@ const Navbar = ({ isMobile, isSidebarOpen, toggleSidebar }) => {
             )}
           </button>
         )}
-              
+          
         <img
           src={isMobile ? "/Group 561.svg" : "/LoomizLogoDarkBlue.svg"}
           alt="Loomiz Logo"
@@ -43,8 +43,9 @@ const Navbar = ({ isMobile, isSidebarOpen, toggleSidebar }) => {
           <span className="hidden sm:inline">New RFQ</span>
           <span className="inline sm:hidden">New RFQ</span>
         </button>
-              
+          
         <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
+          {/* Removed 'route' attribute that was causing the error */}
           <img
             src="/NavrbarNotificationLogo.svg"
             alt="Notifications"
