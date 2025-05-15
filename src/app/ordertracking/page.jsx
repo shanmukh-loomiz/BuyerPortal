@@ -13,21 +13,21 @@ export default function OrderTracking() {
       id: "50396",
       description:
         "Description duis aute irure dolor in reprehenderit in voluptate velit.",
-      status: "QUOTE",
+      status: "ORDER",
       timestamp: "Today • 23 min",
     },
     {
       id: "62396",
       description:
         "Description duis aute irure dolor in reprehenderit in voluptate velit.",
-      status: "ORDER",
+      status: "PRODUCTION",
       timestamp: "Today • 23 min",
     },
     {
       id: "50437",
       description:
         "Description duis aute irure dolor in reprehenderit in voluptate velit.",
-      status: "PRODUCTION",
+      status: "SHIPMENT",
       timestamp: "Today • 23 min",
     },
   ];
@@ -123,7 +123,7 @@ export default function OrderTracking() {
                   </div>
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-6 pl-10 pr-80">
                   <div className="relative flex items-center justify-between">
                     {[
                       "QUOTE",
@@ -143,16 +143,16 @@ export default function OrderTracking() {
                           className="flex flex-col items-center relative z-10"
                         >
                           <div
-                            className={`w-5 h-5 rounded-full flex items-center justify-center
+                            className={`w-4 h-4 rounded-full flex items-center justify-center
                             ${
                               isCompleted
                                 ? "bg-black ring-2"
                                 : isCurrent
-                                ? "bg-[#9197A3] ring-2"
+                                ? "bg-[#9197A3] ring-2  ring-[#9197A3]"
                                 : "bg-white ring-2"
                             }`}
                           >
-                            {isCompleted && <Check size={16} color="white" />}
+                            {isCompleted && <Check size={14} color="white" />}
                           </div>
                           <span
                             className={`text-xs mt-1 ${
@@ -168,25 +168,26 @@ export default function OrderTracking() {
                     })}
 
                     {/* Background line */}
-<div className="absolute h-0.5 top-2.5 left-0 right-0 -z-10 flex">
+                    <div className="absolute top-1.5 left-5 right-10 z-0 flex">
   {["QUOTE", "ORDER", "PRODUCTION", "SHIPMENT"].map((_, idx) => {
     const currentIndex = getStatusIndex(order.status);
     const isBeforeCurrent = idx < currentIndex;
     const isCurrent = idx === currentIndex;
 
     return (
-      <div key={idx} className="flex-1">
+      <div key={idx} className="flex-1 flex items-center">
         <div
-          className={`w-full h-0.5 ${
-            isBeforeCurrent || isCurrent
-              ? "bg-[#000]" // solid dark line
-              : "border-t border-dashed border-gray-400" // dashed line
+          className={`h-0.5 w-full ${
+            idx < currentIndex
+              ? "bg-black"
+              : "border-t border-dashed border-gray-400"
           }`}
         ></div>
       </div>
     );
   })}
 </div>
+
 
                   </div>
                 </div>
