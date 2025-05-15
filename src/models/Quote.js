@@ -1,5 +1,6 @@
-// models/Quote.js
 import mongoose from 'mongoose';
+
+const STEP_STATUS = ["Not Started", "In Progress", "Completed"];
 
 const QuoteSchema = new mongoose.Schema({
   shippingAddress: {
@@ -33,34 +34,71 @@ const QuoteSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-
-  sampleCount:{
+  sampleCount: {
     type: Number,
     default: 0
   },
+  status: {
+    type: String,
+    enum: ["Pending", "Accepted", "Rejected"],
+    default: "Pending"
+  },
 
-  // File URLs stored after upload to Cloudinary
-  techpackFile: {
-    type: String
+  // File URLs
+  techpackFile: String,
+  productImagesFiles: [String],
+  colorSwatchFiles: [String],
+  fabricFiles: [String],
+  miscellaneousFiles: [String],
+
+  // Production steps
+  productionSteps: {
+    sampleConfirmation: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    fabricInhoused: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    fabricQualityCheck: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    production: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    packaging: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    qualityCheck: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    outForDelivery: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    },
+    confirmPaymentTerms: {
+      type: String,
+      enum: STEP_STATUS,
+      default: "Not Started"
+    }
   },
-  productImagesFiles: {
-    type: [String]
-  },
-  colorSwatchFiles: {
-    type: [String]
-  },
-  fabricFiles: {
-    type: [String]
-  },
-  miscellaneousFiles: {
-    type: [String]
-  },
-  // Timestamps
+
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-// Use this approach to prevent model recompilation errors
-export default mongoose.models.Quote || mongoose.model('Quote', QuoteSchema);
+export default mongoose.models.Quote || mongoose.model("Quote", QuoteSchema);
