@@ -67,22 +67,8 @@ body {
 @tailwind components;
 @tailwind utilities;
 
-/* Import fonts */
-@font-face {
-  font-family: 'NSmedium';
-  src: url('/fonts/NotoSans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'Noto Sans';
-  src: url('/fonts/NotoSans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+
 
 /* Add animations for popup effects */
 @keyframes fadeIn {
