@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "../app/components/navbar";
 import Sidebar from "./components/sidebar";
 import { usePathname } from "next/navigation";
+import OrderDetail from "./components/oderdetails";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -129,6 +130,8 @@ export default function RootLayout({ children }) {
             onClick={() => isMobile && isSidebarOpen && setIsSidebarOpen(false)}
           >
             {children}
+
+            <OrderDetail />
           </main>
         )}
       </body>

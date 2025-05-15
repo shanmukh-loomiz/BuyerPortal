@@ -9,7 +9,7 @@ const Sidebar = ({ isMobile, isOpen, closeSidebar }) => {
   const mainItems = [
     { label: 'OVERVIEW', icon: '/SidebarOverviewLogo.svg', route: '/' },
     { label: 'REQUEST FOR QUOTE', icon: '/SidebarRFQLogo.svg', route: '/rfq' },
-    { label: 'ORDER TRACKING', icon: '/SidebarOrderTrackingLogo.svg', route: '/order-tracking' },
+    { label: 'ORDER TRACKING', icon: '/SidebarOrderTrackingLogo.svg', route: '/ordertracking' },
     { label: 'PAYMENT', icon: '/SidebarPaymentLogo.svg', route: '/payment' },
     { label: 'CHATS', icon: '/SidebarChatsLogo.svg', route: '/chats' },
     { label: 'ORDER HISTORY', icon: '/SidebarOrderHistoryLogo.svg', route: '/order-history' },
