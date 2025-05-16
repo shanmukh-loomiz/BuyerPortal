@@ -32,7 +32,7 @@ export default function OrderDetail() {
               <div className="grid grid-cols-2 gap-10 mb-6">
                 {/* Loomiz Team */}
                 <div>
-                  <h4 className="text-[#3F72AF]  font-semibold text-[22px]">
+                  <h4 className="text-[#3F72AF] font-[NSmedium]  font-semibold text-[22px]">
                     LOOMIZ TEAM
                   </h4>
                   <p className=" font-[NSregular]">Name</p>
@@ -41,7 +41,7 @@ export default function OrderDetail() {
 
                 {/* Manufacturer Assigned */}
                 <div>
-                  <h4 className="text-[#3F72AF]  font-semibold   mb-1 text-[22px]">
+                  <h4 className="text-[#3F72AF] font-[NSmedium]  font-semibold   mb-1 text-[22px]">
                     MANUFACTURER ASSIGNED
                   </h4>
                   <p className="  font-[NSregular]">Assigned to</p>
@@ -54,7 +54,7 @@ export default function OrderDetail() {
               <div className="grid grid-cols-2 gap-10">
                 {/* Details */}
                 <div>
-                  <h4 className="text-[#3F72AF]  font-semibold mb-1 text-[22px]">
+                  <h4 className="text-[#3F72AF] font-[NSmedium] font-semibold mb-1 text-[22px]">
                     DETAILS
                   </h4>
                   <div className="flex gap-45">
@@ -87,7 +87,7 @@ export default function OrderDetail() {
               <div className="flex-1 space-y-6">
                 {/* Colours */}
                 <div>
-                  <h4 className="text-[#3F72AF]  font-semibold mb-2 text-[20px] ">
+                  <h4 className="text-[#3F72AF] font-[NSmedium] font-semibold mb-2 text-[20px] ">
                     COLOURS
                   </h4>
                   <div className="grid grid-cols-3 gap-2">
@@ -104,7 +104,7 @@ export default function OrderDetail() {
 
                 {/* Sizes */}
                 <div>
-                  <h4 className="text-[#3F72AF]  font-semibold mb-2 text-[20px]">
+                  <h4 className="text-[#3F72AF] font-[NSmedium]  font-semibold mb-2 text-[20px]">
                     SIZES
                   </h4>
                   <div className="flex flex-wrap gap-4">
