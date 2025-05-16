@@ -513,7 +513,7 @@ useEffect(() => {
             Upload png, jpeg, svg, pdf and docs <br />
             Files must be less than 10 MB
           </p>
-          <label className="cursor-pointer mt-5 px-8 py-2 py-1 text-sm text-white font-NSregular rounded-[20px] bg-[#3F72AF]">
+          <label className="cursor-pointer mt-5 px-8 py-2 py-1 text-sm text-white font-NSregular rounded-[20px] bg-[#3F72AF] ">
             UPLOAD
             <input
               type="file"

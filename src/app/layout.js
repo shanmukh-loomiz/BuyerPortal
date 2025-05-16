@@ -6,8 +6,7 @@ import "./globals.css";
 import Navbar from "../app/components/navbar";
 import Sidebar from "./components/sidebar";
 import { usePathname } from "next/navigation";
-import OrderDetail from "./components/oderdetails";
-import OrderTrackingStepsHome from "./components/OrderTrackingSteps/OderTrackingStepsHome";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -132,9 +131,7 @@ export default function RootLayout({ children }) {
           >
             {children}
 
-            <OrderDetail />
-
-            <OrderTrackingStepsHome />
+           
           </main>
         )}
       </body>
