@@ -1,23 +1,43 @@
 "use client";
 import { useState } from "react";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Clock, Search, Check } from "lucide-react";
 
 export default function OrderTracking({ acceptedQuotes = [] }) {
   const [activeTab, setActiveTab] = useState("CURRENT");
   const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
 
-  // Logic to determine order status based on production steps
-  const getOrderStatus = (productionSteps) => {
+  // Logic to determine order status based on quote data and productionSteps if available
+  const getOrderStatus = (quote) => {
+    // If productionSteps doesn't exist yet, default to ORDER
+    if (!quote.productionSteps) {
+      return "ORDER";
+    }
+    
+    const productionSteps = quote.productionSteps;
+    
     if (productionSteps?.outForDelivery === "Completed") {
       return "SHIPMENT";
+    } else if (
+      productionSteps?.confirmPaymentTerms === "Completed" ||
+      productionSteps?.confirmPaymentTerms === "In Progress"
+    ) {
+      return "PAYMENT";
     } else if (
       productionSteps?.production === "In Progress" ||
       productionSteps?.production === "Completed" ||
       productionSteps?.packaging === "In Progress" ||
       productionSteps?.packaging === "Completed" ||
       productionSteps?.qualityCheck === "In Progress" ||
-      productionSteps?.qualityCheck === "Completed"
+      productionSteps?.qualityCheck === "Completed" ||
+      productionSteps?.sampleConfirmation === "In Progress" ||
+      productionSteps?.sampleConfirmation === "Completed" ||
+      productionSteps?.fabricInhoused === "In Progress" ||
+      productionSteps?.fabricInhoused === "Completed" ||
+      productionSteps?.fabricQualityCheck === "In Progress" ||
+      productionSteps?.fabricQualityCheck === "Completed" 
     ) {
       return "PRODUCTION";
     } else {
@@ -28,11 +48,15 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
   // Transform acceptedQuotes into the orders format
   const orders = acceptedQuotes.map(quote => ({
     id: quote._id.slice(-5), // Use last 5 chars of _id as a shorter ID
+    fullId: quote._id, // Store the full ID for navigation
     description: quote.desc || "No description provided",
-    status: getOrderStatus(quote.productionSteps),
+    status: getOrderStatus(quote),
     timestamp: quote.createdAt ? formatTimestamp(quote.createdAt) : "Date unknown",
-    productionSteps: quote.productionSteps,
-    productImage: quote.prod_image || null
+    productionSteps: quote.productionSteps || {},
+    productImage: quote.prod_image || null,
+    quantity: quote.quantity,
+    leadTime: quote.leadTime,
+    fabricComposition: quote.fabricComposition
   }));
 
   // Format timestamp to show relative time
@@ -56,8 +80,15 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
   };
 
   const handleGoBack = () => {
-    console.log("Going back to previous page");
-    // Implement actual navigation logic here
+    // Use next/navigation in a client component
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
+
+  // Handle clicking on an order to navigate to the details page
+  const handleOrderClick = (fullId) => {
+    router.push(`/ordertracking/${fullId}`);
   };
 
   const filteredOrders = orders.filter((order) =>
@@ -102,19 +133,21 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
         </div>
 
         <div className="text-[#ACACAC] text-gray-500 mb-4">
-          View at what stage has your order reached
+          View at what stage your orders have reached
         </div>
 
-        <div className="flex items-center justify-between mb-6 ">
-          <button
-            onClick={handleGoBack}
-            className="flex items-center text-blue-600 hover:text-blue-800"
-          >
-            <span className="font-medium text-[28px] text-[#1D1B20]">
-              Order Details
-            </span>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center">
+            <button
+              onClick={handleGoBack}
+              className="flex items-center text-blue-600 hover:text-blue-800"
+            >
+              <span className="font-medium text-[28px] text-[#1D1B20]">
+                Order Details
+              </span>
+            </button>
             <img src="/Arrow.svg" className="ml-4" alt="" />
-          </button>
+          </div>
 
           <div className="relative">
             <input
@@ -137,7 +170,11 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
         ) : (
           <div className="space-y-6">
             {displayedOrders.map((order, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm p-6 flex">
+              <div 
+                key={index} 
+                className="bg-white rounded-lg shadow-sm p-6 flex cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => handleOrderClick(order.fullId)}
+              >
                 <div className="w-24 h-24 bg-gray-200 rounded-[10px] flex items-center justify-center flex-shrink-0 overflow-hidden">
                   {order.productImage ? (
                     <img 
@@ -153,7 +190,7 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
                 </div>
 
                 <div className="ml-4 flex-1">
-                  <div className="flex justify-between items-start ">
+                  <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-medium text-[#1D1B20] font-[NSregular] text-[17px]">
                         CODE {order.id}
@@ -161,10 +198,20 @@ export default function OrderTracking({ acceptedQuotes = [] }) {
                       <p className="text-sm text-[#49454F] mt-1 text-[14px]">
                         {order.description}
                       </p>
+                      {order.quantity && (
+                        <p className="text-sm text-[#49454F] mt-1 text-[14px]">
+                          Quantity: {order.quantity} • Lead Time: {order.leadTime || 'N/A'}
+                        </p>
+                      )}
+                      {order.fabricComposition && (
+                        <p className="text-sm text-[#49454F] mt-1 text-[14px]">
+                          Fabric: {order.fabricComposition}
+                        </p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="mt-6 pl-10 pr-80">
+                  <div className="mt-6 pl-10 pr-10 md:pr-80">
                     <div className="relative flex items-center justify-between">
                       {[
                         "QUOTE",
