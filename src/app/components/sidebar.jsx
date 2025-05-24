@@ -11,9 +11,9 @@ const Sidebar = ({ isMobile, isOpen, closeSidebar }) => {
     { label: 'REQUEST FOR QUOTE', icon: '/SidebarRFQLogo.svg', route: '/rfq' },
     { label: 'ORDER TRACKING', icon: '/SidebarOrderTrackingLogo.svg', route: '/ordertracking' },
     { label: 'PAYMENT', icon: '/SidebarPaymentLogo.svg', route: '/payment' },
-    { label: 'CHATS', icon: '/SidebarChatsLogo.svg', route: '/chats' },
-    { label: 'ORDER HISTORY', icon: '/SidebarOrderHistoryLogo.svg', route: '/order-history' },
-    { label: 'CATALOGUES', icon: '/SidebarOrderHistoryLogo.svg', route: '/catalogues' },
+    { label: 'CHATS', icon: '/SidebarChatsLogo.svg', route: '/Chats' },
+    // { label: 'ORDER HISTORY', icon: '/SidebarOrderHistoryLogo.svg', route: '/order-history' },
+    { label: 'CATALOGUES', icon: '/SidebarOrderHistoryLogo.svg', route: 'https://ecomloomiz.vercel.app/' },
   ];
   
   const bottomItems = [
