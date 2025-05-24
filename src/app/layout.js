@@ -8,6 +8,7 @@ import Sidebar from "./components/sidebar";
 import { usePathname } from "next/navigation";
 import OrderDetail from "./components/oderdetails";
 import OrderTrackingStepsHome from "./components/OrderTrackingSteps/OderTrackingStepsHome";
+import Charts from "./components/Charts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -135,6 +137,8 @@ export default function RootLayout({ children }) {
             <OrderDetail />
 
             <OrderTrackingStepsHome />
+
+            <Charts />
           </main>
         )}
       </body>
